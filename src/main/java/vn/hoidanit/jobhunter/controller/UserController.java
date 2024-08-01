@@ -5,11 +5,15 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.hoidanit.jobhunter.domain.User;
 import vn.hoidanit.jobhunter.service.UserService;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class UserController {
@@ -29,6 +33,24 @@ public class UserController {
     public String deleteUser(@PathVariable("id") long id) {
         this.userService.handleDeleteUser(id);
         return "newUser";
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable("id") long id) {
+        User user = this.userService.fetchUserById(id);
+        return user;
+    }
+
+    @GetMapping("/user")
+    public List<User> getAllUsers() {
+        return this.userService.fetchAllUsers();
+    }
+
+    @PutMapping("user")
+    public User updateUser(@RequestBody User user) {
+        // TODO: process PUT request
+        User newUser = this.userService.handleUpdateUser(user);
+        return newUser;
     }
 
 }
